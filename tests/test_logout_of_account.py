@@ -1,22 +1,20 @@
 import pytest
 from locators import BUTTON_EXIT, BUTTON_PERSONAL_ACCOUNT
+from urls import PERSONAL_ACCOUNT_URL, LOGIN_URL
 
 # Выход из аккаунта после входа
-@pytest.mark.usefixture("registration_and_login")
-def test_tap_constructor_button_from_profile(registration_and_login):
-    browser = registration_and_login  # Получаем объект браузера из фикстуры
+@pytest.mark.usefixture("registration", "login")
+def test_logout_of_account(login):
+    browser = login  # Получаем объект браузера из фикстуры
 
     # Нажатие на кнопку "Личный кабинет"
     browser.find_element(*BUTTON_PERSONAL_ACCOUNT).click()
 
     # Проверка перехода в личный кабинет
-    assert browser.current_url == "https://stellarburgers.education-services.ru/account/profile", "Переход в личный кабинет не произошёл"
+    assert browser.current_url == PERSONAL_ACCOUNT_URL, "Переход в личный кабинет не произошёл"
 
     # Нажатие на кнопку "Выход"
     browser.find_element(*BUTTON_EXIT).click()
 
     # Проверка перехода на страницу входа
-    assert browser.current_url == "https://stellarburgers.education-services.ru/login", "Переход на страницу входа не произошёл"
-    
-    # Закрытие браузера после теста
-    browser.quit()
+    assert browser.current_url == LOGIN_URL, "Переход на страницу входа не произошёл"
