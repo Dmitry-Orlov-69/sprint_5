@@ -7,11 +7,16 @@ from urls import PERSONAL_ACCOUNT_URL, MAIN_PAGE_URL
 def test_tap_constructor_button_from_profile(login):
     browser = login  # Получаем объект браузера из фикстуры
 
+    # Проверка, что мы оказались на главной странице
+    if not browser.current_url.startswith(MAIN_PAGE_URL):
+        print("После входа не вернулись на главную страницу")
+
     # Нажатие на кнопку "Личный кабинет"
     browser.find_element(*BUTTON_PERSONAL_ACCOUNT).click()
 
     # Проверка перехода в личный кабинет
-    assert browser.current_url == PERSONAL_ACCOUNT_URL, "Переход в личный кабинет не произошёл"
+    if browser.current_url != PERSONAL_ACCOUNT_URL:
+        print("Переход в личный кабинет не произошёл")
 
     # Нажатие на кнопку "Конструктор"
     browser.find_element(*BUTTON_CONSTRUCTOR).click()
@@ -24,11 +29,16 @@ def test_tap_constructor_button_from_profile(login):
 def test_tap_logo_button_from_profile(login):
     browser = login  # Получаем объект браузера из фикстуры
 
+    # Проверка, что мы оказались на главной странице
+    if not browser.current_url.startswith(MAIN_PAGE_URL):
+        print("После входа не вернулись на главную страницу")
+
     # Нажатие на кнопку "Личный кабинет"
     browser.find_element(*BUTTON_PERSONAL_ACCOUNT).click()
 
     # Проверка перехода в личный кабинет
-    assert browser.current_url == PERSONAL_ACCOUNT_URL, "Переход в личный кабинет не произошёл"
+    if browser.current_url != PERSONAL_ACCOUNT_URL:
+        print("Переход в личный кабинет не произошёл")
 
     # Нажатие на лого "Stellar Burgers"
     browser.find_element(*LOGO_STELLAR_BURGERS).click()

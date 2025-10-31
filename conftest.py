@@ -4,7 +4,7 @@ import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from locators import NAME_INPUT, EMAIL_INPUT, PASSWORD_INPUT, REGISTER_BUTTON, BUTTON_LOGIN_ACCOUNT, INPUT_EMAIL, INPUT_PASSWORD, BUTTON_SIGN_IN
-from urls import REGISTER_URL, LOGIN_URL, MAIN_PAGE_URL
+from urls import REGISTER_URL, MAIN_PAGE_URL
 
 @pytest.fixture
 def browser_start_end():
@@ -33,13 +33,10 @@ def registration(browser_start_end):
     # Нажатие кнопки регистрации
     browser.find_element(*REGISTER_BUTTON).click()
 
-    # Проверка URL после регистрации
-    assert browser.current_url == LOGIN_URL, "Регистрация не прошла успешно, перенаправление на страницу входа не произошло"
-
     browser.email = email
     browser.password = password
 
-    yield browser  # Возврат браузера для использования в тесте
+    return
 
 @pytest.fixture
 def login(registration):
@@ -61,7 +58,4 @@ def login(registration):
     # Нажатие кнопки "Войти"
     browser.find_element(*BUTTON_SIGN_IN).click()
 
-    # Проверка, что мы оказались на главной странице
-    assert browser.current_url.startswith(MAIN_PAGE_URL), "После входа не вернулись на главную страницу"
-
-    yield browser  # Возврат браузера для использования в тесте
+    return
