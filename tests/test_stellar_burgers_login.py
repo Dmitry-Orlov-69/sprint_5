@@ -1,3 +1,5 @@
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import pytest
 from locators import BUTTON_LOGIN_ACCOUNT, BUTTON_PERSONAL_ACCOUNT, BUTTON_SIGN_IN_FROM_REGISTRATION, INPUT_EMAIL, INPUT_PASSWORD, BUTTON_SIGN_IN
 from urls import MAIN_PAGE_URL, LOGIN_URL, REGISTER_URL, FORGOT_PASSWORD_URL
@@ -7,9 +9,8 @@ from urls import MAIN_PAGE_URL, LOGIN_URL, REGISTER_URL, FORGOT_PASSWORD_URL
 def test_login(registration):
     browser = registration  # Получаем объект браузера из фикстуры
 
-    # Проверка URL после регистрации
-    if browser.current_url != LOGIN_URL:
-        print("Регистрация не прошла успешно, перенаправление на страницу входа не произошло")
+    # Ожидание перехода на страницу входа после регистрации
+    WebDriverWait(browser, 10).until(EC.url_to_be(LOGIN_URL))
 
     # Вход на главную страницу
     browser.get(MAIN_PAGE_URL)
@@ -35,9 +36,8 @@ def test_login(registration):
 def test_login_via_personal_account(registration):
     browser = registration
 
-    # Проверка URL после регистрации
-    if browser.current_url != LOGIN_URL:
-        print("Регистрация не прошла успешно, перенаправление на страницу входа не произошло")
+    # Ожидание перехода на страницу входа после регистрации
+    WebDriverWait(browser, 10).until(EC.url_to_be(LOGIN_URL))
 
     # Открытие главной страницы
     browser.get(MAIN_PAGE_URL)
@@ -46,8 +46,7 @@ def test_login_via_personal_account(registration):
     browser.find_element(*BUTTON_PERSONAL_ACCOUNT).click()
 
     # Проверка перехода на страницу входа
-    if browser.current_url != LOGIN_URL:
-        print("Переход на страницу входа не произошёл")
+    WebDriverWait(browser, 10).until(EC.url_to_be(LOGIN_URL))
 
     # Заполнение полей email и пароль
     browser.find_element(*INPUT_EMAIL).send_keys(browser.email)
@@ -64,9 +63,8 @@ def test_login_via_personal_account(registration):
 def test_login_from_registration(registration):
     browser = registration
 
-    # Проверка URL после регистрации
-    if browser.current_url != LOGIN_URL:
-        print("Регистрация не прошла успешно, перенаправление на страницу входа не произошло")
+    # Ожидание перехода на страницу входа после регистрации
+    WebDriverWait(browser, 10).until(EC.url_to_be(LOGIN_URL))
 
     # Открытие страницы регистрации
     browser.get(REGISTER_URL)
@@ -75,8 +73,7 @@ def test_login_from_registration(registration):
     browser.find_element(*BUTTON_SIGN_IN_FROM_REGISTRATION).click()
 
     # Проверка перехода на страницу входа
-    if browser.current_url != LOGIN_URL:
-        print("Переход на страницу входа не произошёл")
+    WebDriverWait(browser, 10).until(EC.url_to_be(LOGIN_URL))
 
     # Заполнение полей email и пароль
     browser.find_element(*INPUT_EMAIL).send_keys(browser.email)
@@ -93,9 +90,8 @@ def test_login_from_registration(registration):
 def login_via_recovery(registration):
     browser = registration
 
-    # Проверка URL после регистрации
-    if browser.current_url != LOGIN_URL:
-        print("Регистрация не прошла успешно, перенаправление на страницу входа не произошло")
+    # Ожидание перехода на страницу входа после регистрации
+    WebDriverWait(browser, 10).until(EC.url_to_be(LOGIN_URL))
 
     # Открытие формы восстановления пароля
     browser.get(FORGOT_PASSWORD_URL)
@@ -104,8 +100,7 @@ def login_via_recovery(registration):
     browser.find_element(*BUTTON_SIGN_IN_FROM_REGISTRATION).click()
 
     # Проверка перехода на страницу входа
-    if browser.current_url != LOGIN_URL:
-        print("Переход на страницу входа не произошёл")
+    WebDriverWait(browser, 10).until(EC.url_to_be(LOGIN_URL))
 
     # Заполнение полей email и пароль
     browser.find_element(*INPUT_EMAIL).send_keys(browser.email)

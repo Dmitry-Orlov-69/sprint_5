@@ -1,3 +1,5 @@
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import pytest
 from locators import BUTTON_PERSONAL_ACCOUNT
 from urls import MAIN_PAGE_URL, PERSONAL_ACCOUNT_URL
@@ -7,9 +9,8 @@ from urls import MAIN_PAGE_URL, PERSONAL_ACCOUNT_URL
 def test_personal_account_click_transition(login):
     browser = login  # Получаем объект браузера из фикстуры
 
-    # Проверка, что мы оказались на главной странице
-    if not browser.current_url.startswith(MAIN_PAGE_URL):
-        print("После входа не вернулись на главную страницу")
+    # Ожидание перехода на главную страницу
+    WebDriverWait(browser, 10).until(EC.url_contains(MAIN_PAGE_URL))
 
     # Нажатие на кнопку "Личный кабинет"
     browser.find_element(*BUTTON_PERSONAL_ACCOUNT).click()
